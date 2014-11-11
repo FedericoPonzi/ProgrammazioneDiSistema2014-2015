@@ -173,7 +173,9 @@ Ci sono due motivi di base:
  - __Prestazionale__: Qualche operazione che potrei fare in maniera concorrente/parallela, in modo da ottenere prestazioni migliori e riddurre il tempo di esecuzione.
 
 In questo caso, i thread non fanno tutti la stessa cosa, cioè la fanno ma su dati diversi. Quindi è più un parallelismo sui dati che sulle funzionalità.
+
 ![MergeSort](images/5/Mergesort.png)
+
 Vediamo quindi un mergesort usando i threads:
 
     /* Chapter 8 SortMT. Work crew model
