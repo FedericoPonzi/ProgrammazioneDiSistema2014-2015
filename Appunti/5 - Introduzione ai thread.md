@@ -110,6 +110,10 @@ Non posso aspettare la terminazione di un generico thread.
 
 Anche in questo caso posso definire la dimensione dello stack, ma anche la posizione (stackaddr).
 Se viene superata la dimensione dello stack, il pthread comincierà a scrivere in uno spazio non suo.
+Posso usare `int_pthread_detach` che mi permette di avere di impostare un thread in uno stato di background simile ad un processo deamon.
+Quando il thread termina tutte le sue risorse vengono automaticamente liberate.
+Quando uno invoca pthread_exit termina il thread.
+Se usa exit terminano tutti i thread del processo.
 
 ###Unix/Linux Threads
 I thread di uno stesso processo condividono 
@@ -173,7 +177,7 @@ Ci sono due motivi di base:
  - __Prestazionale__: Qualche operazione che potrei fare in maniera concorrente/parallela, in modo da ottenere prestazioni migliori e riddurre il tempo di esecuzione.
 
 In questo caso, i thread non fanno tutti la stessa cosa, cioè la fanno ma su dati diversi. Quindi è più un parallelismo sui dati che sulle funzionalità.
-![MergeSort](images/5/Mergesort.png)
+![MergeSort](images/Mergesort.png)
 Vediamo quindi un mergesort usando i threads:
 
     /* Chapter 8 SortMT. Work crew model
