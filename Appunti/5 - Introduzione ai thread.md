@@ -178,6 +178,7 @@ Ci sono due motivi di base:
 
 In questo caso, i thread non fanno tutti la stessa cosa, cioè la fanno ma su dati diversi. Quindi è più un parallelismo sui dati che sulle funzionalità.
 ![MergeSort](images/Mergesort.png)
+
 Vediamo quindi un mergesort usando i threads:
 
     /* Chapter 8 SortMT. Work crew model
