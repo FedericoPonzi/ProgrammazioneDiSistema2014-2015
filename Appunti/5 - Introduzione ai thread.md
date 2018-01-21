@@ -11,8 +11,8 @@ Dopo il goto, le variabili statiche e globale non vengono modificate.
 Quando eseguo il goto, per quanto riguarda le variabili automatiche: c'è un principio che non vale sempre. Dipende da dove è stato fatto il setjump (e potrebbe essere fatto da qualsiasi punto).
 Non possiamo quindi contare sul fatto che le variabili abbiamo il loro valore nel momento in cui è stata chiamata la setjump.
 
-#Thread
-##Thread in Windows
+# Thread
+## Thread in Windows
 I thread hanno caratteristiche molto simili fra windows e unix, diciamo che praticamente fanno le stesse cose ed hanno lo stesso comportamento: la sintassi però è completamente diversa. Vedremo quindi in parallelo le differenze fra le chiamate di sistema.
 Thread = filo
 C'è anche una differenza a livello di sistema operativo: in unix linux, l' unità fondamentale è il processo all' interno di Windows invece i thread. La selezione quindi si fa sul *thread* e non sul *processo*.
@@ -28,7 +28,7 @@ Nei thread, ognuno può partire da funzioni diverse. Però non esiste un punto d
 
 Quando viene creato il thread da una funzione, a quella funzione viene passato un *parametro generico* che è un puntatore che contiene informazioni che sono *specifici* di quel thread.
 
-##Come si crea un thread
+## Come si crea un thread
 Ecco alcune funzioni di base per la creazione ed aspettare la terminazione:
 In windows, si crea usando la funzione CreateThread:
 
@@ -43,7 +43,7 @@ In windows, si crea usando la funzione CreateThread:
 
 Il thread è un oggetto _kernel_, e come tale mi viene creato un `HANDLE`.
 
-###Ciclo di vita del thread:
+### Ciclo di vita del thread:
 Il thread termina quando termina l' esecuzione della funzione con il quale è stato fatto partire.
 Creo un thread invocando la funzione `foo`, che a sua volta chiamerà la funzione `bar` eccetera.
 Ma quando termina la funzione `foo`, il thread __termina__.
@@ -80,7 +80,7 @@ Per accedere ad un altro thread, uso:
 	DWORD dwThreadId);
 I thread hanno associato un contatore, che non ha un equivalente dei processi. E' un `suspended count` che viene utilizzato per esempio per la sospensione dallo stato di esecuzione. Se il valore è `1` il thread non può andare in esecuzione, se chiamo resume thread il contatore viene diminuito. Il thread può essere sospeso più di una volta (non è un valore booleano).
 
-##Equivalente *nix: PosixThread
+## Equivalente *nix: PosixThread
 
 La equivalente posix è la pthread_create:
 
@@ -115,7 +115,7 @@ Quando il thread termina tutte le sue risorse vengono automaticamente liberate.
 Quando uno invoca pthread_exit termina il thread.
 Se usa exit terminano tutti i thread del processo.
 
-###Unix/Linux Threads
+### Unix/Linux Threads
 I thread di uno stesso processo condividono 
 
  - tutta la parte di memoria globale (dati, memoria dinamica)
@@ -132,7 +132,7 @@ Di specifico, possiedono:
  - Maschera dei segnali, due thread possono quindi bloccare segnali diversi
  - Due thread dello stesso processo possono avere priorità diverse.
 
-##Windows
+## Windows
 
 In windows posso controllare il flusso diesecuzione, aspettando per esempio il termine di un thread. Per fare questa attesa riutilizzo la primitiva chiamata `WaitFor[Single|Multiple]Object`. Mi permette di specificare un handle ed un timeout associato - aspetto quindi che succeda qualcosa su quell' oggetto per timeout tempo (0 = polling).
 Se voglio attendere la terminazione di un thread, specificherò l' handle del thread.
@@ -169,8 +169,8 @@ Per aggirare il problema dello strtok si usa la funzione strstok_r, a cui basta 
 
 Esiste la libreria base, ed esiste la libreria c threadsafe. In questo caso però si dovrà utilizzare la funzione beginthreader invece che CreateThread in Windows.
 
-#Esempio di thread: merge-sort
-###Perchè usare i thread?
+# Esempio di thread: merge-sort
+### Perchè usare i thread?
 Ci sono due motivi di base:
 
  - __Funzionale__: Mi fa comodo che un certo thread faccia una certa funzione. Il fatto che poi questi thread non girino in maniera concorrente, non mi interessa. Mi interessa poter dire che A fa una cosa e B ne fa un'altra.
