@@ -152,7 +152,7 @@ Permette di creare un thread all' interno dello spazio di un altro processo. Il 
 
 Il passaggio del puntatore o altre funzioni, si può eseguire usando qualsiasi meccanismo di `IPC`. 
 
-##Principali differenze fra i thread windows e pthread
+## Principali differenze fra i thread windows e pthread
 Le principali differenze fra i due tipi di thread:
 
  * E' impossibile creare un pthread all' interno di un altro processo.
