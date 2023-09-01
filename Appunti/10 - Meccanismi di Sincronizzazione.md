@@ -1,7 +1,9 @@
 
-#Semafori
+# Semafori
 In windows il semaforo è supportato a livello kernel, quindi viene gestito usando un oggetto Handle.
+
 i crea un semaforo usando la primitiva `CreateSemaphore( LPSECURITY_A` il valore del contatore è sempre maggiore uguale a 0, e sempre minore uguale al maximum count.
+
 Come in mutex, possiamo associargli un nome (per lo stesso motivo dei mutex).
 Il semaforo si acquisisce usando `WaitForSingleObject`.
 E' possibile decrementare il contatore solo di una unità. C'è una asimmetria fra il decremento e incremento del contatore.
@@ -18,7 +20,7 @@ Nel mutex per esempio, chi occupa il semforo deve rilasciarlo.
 Una segnalazione può attivare più thread in attesa, infatti il produttore per esempio rilascia più di un permit quindi vengono risvegliati più thread. 
 Il contatore di un semaforo è spesso utilizzato per rappresentare il numero di risorse di un certo tipo disponibili (ad esempio messaggi); 
 
-#Condition Variables
+# Condition Variables
 
 Il mutex permette la mutua esclusione mentre una condition variable frnisce un meccanismo di segnalazione.
 
@@ -26,14 +28,19 @@ Il mutex permette la mutua esclusione mentre una condition variable frnisce un m
     int pthread_cond_signal (pthread_cond_t *cptr);
 
 *Attenzione al signal*: non ha nulla a che fare con i segnali!
+
 Le condition variable hanno il tipo pthread_cond_t che vanno inizializzate a PTHREAD_COND_INITIALIZER.
+
 Un thread rimane in attesa finchè un altro thread non gli segnala che una certa condizione si è avverata.
-Quando si usa una condition variable deve essere sempre associata ad un mutex. L'idea è che la condition variable è la condizione su cui andare in attesa. Se questa condizione non è verificata attendo, e qualcun'altro mi segnala che la condizione si è verificata.
+
+Quando si usa una condition variable deve essere sempre associata ad un mutex. L'idea è che la condition variable è la condizione su cui andare in attesa. 
+Se questa condizione non è verificata attendo, e qualcun'altro mi segnala che la condizione si è verificata.
 Se io però non faccio il controllo della segnalazione di attesa 
 Un thread controlla che la condizione è verificata. Va in wait, prima di andare in wait un' altro thread verifica la condizione e lo segnala. Adesso il primo thread va a dormire, e quindi la segnalazione è persa.
 Per evitare ciò si associa un mutex.
 Quando la condition variable non viene verificata e il thread va a dormire, il mutex viene rilasciato automaticamente.
 Quando il thread deve fare la segnalazione c'è una acquisizione auotmatica.
+
 Sequenza:
 
  1. Acquisisco il mutex
@@ -47,9 +54,9 @@ In quel caso ovviamente biogna ricontrollare la condizione avendo il mutex acqui
 La cond_timedwait è una variante che presenta un timeout. La cond_wait mette in attesa il thread per un tempo indeterminato.
 La cond_timedwait specifica invece un tempo massimo d'attesa.
 
->Esempio: stevens cartella threads
+> Esempio: stevens cartella threads
 
-#Eventi
+# Eventi
 L' ultimo oggetto che permette la sncronizzazione a livello kernel, sono gli eventi.
 E' un meccanismo molto potente, non è disponibile in forma nativa sotto unix/linux. Sotto windows è abbastanza utilizzato e lo vedremo quì, ma non c'è un diretto equivalente per unix/linux.
 Sotto windows si possono così emulare anche le condition variables.
@@ -93,7 +100,8 @@ Permette di ottenere un controllo in maniera atomica:
     return Temp;
 
 
-###Tabella riassuntiva dei sistemi di sincronizzazione in Win32
+### Tabella riassuntiva dei sistemi di sincronizzazione in Win32
+
 ![Tabella riassuntiva](images/tabella-riassuntiva-meccanismi-di-sync-windows.png)
 
 Da windows vista in poi microsoft ha deciso di introdurre CS di sistema. Hanno un comportamente abbastanza simile a quelle di unix/linux.
